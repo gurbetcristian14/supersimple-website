@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>SOFELA PREMIER SRL - Depozit Legume și Fructe en Gros</title>
+    <meta name="description" content="SOFELA PREMIER SRL - Depozit legume și fructe. Calitate garantată, prețuri competitive și logistică optimizată." />
+    <meta name="keywords" content="Sofela Premier, depozit legume, fructe, ridicata, Galati, Matca" />
+    <link rel="icon" href="images/logo.png" />
+    <style>
+        /*
+         * Variabile CSS - Configuratie Globala 
+         */
+        :root{
+            --accent: #1f6f3a; 
+            --accent-contrast: #ffd400; 
+            --muted: #4b5563;
+            --bg: #ffffff;
+            --text: #0b1220;
+            --maxw: 1200px; 
+            --radius: 12px;
+            --focus: 3px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            --base-font: 16px; 
+            --header-height: 80px; 
+        }
+        
+        /* Tema Contrast Inalt (WCAG 2.1 AA) */
+        html[data-contrast="high"]{
+            --bg:#000000;
+            --text:#ffffff;
+            --accent: var(--accent-contrast);
+            --muted:#e5e7eb;
+            filter: none;
+        }
+        
+        /* Ajustari specifice pentru Contrast Inalt */
+        html[data-contrast="high"] header[role="banner"]{ background: rgba(0,0,0,0.97); border-bottom: 1px solid var(--accent); }
+        html[data-contrast="high"] .product{ background: transparent; border-color: var(--muted); color: var(--text); }
+        html[data-contrast="high"] .hero-right .card, html[data-contrast="high"] .card-plain, html[data-contrast="high"] .contact{
+            background: transparent; border-color: var(--muted);
+        }
+        html[data-contrast="high"] input, html[data-contrast="high"] textarea{ background: #111; border-color: #555; color: var(--text); }
+        html[data-contrast="high"] img{filter:brightness(.9) contrast(1.15) saturate(.95)}
+        
+        /* Butoanele de accesibilitate in modul contrast inalt */
+        html[data-contrast="high"] .controls button{
+            border: 2px solid var(--accent); 
+            color: var(--text); 
+            background: #222;
+        }
+        html[data-contrast="high"] .controls button[aria-pressed="true"]{
+            box-shadow:inset 0 0 0 2px var(--text); 
+            background: var(--accent); 
+            color: #000; 
+        }
+
+        /* STILURI DE BAZA - PENTRU DESKTOP */
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0; background:var(--bg); color:var(--text); line-height:1.5; overflow-x:hidden; font-size:var(--base-font);
+            padding-top: var(--header-height); 
+        }
+        .container{max-width:var(--maxw); margin:0 auto; padding:0 20px;}
+        
+        /* SKIP LINK */
+        .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
+        .skip-link:focus{left:8px;top:8px;width:auto;height:auto;padding:8px 12px;background:#000;color:#fff;border-radius:6px;z-index:9999}
+
+        /* HEADER (FIXED) - DESKTOP LAYOUT */
+        header[role="banner"]{
+            position:fixed; top:0; left:0; right:0; background:rgba(255,255,255,0.97); backdrop-filter:blur(6px);
+            border-bottom:1px solid #eee; z-index:200; box-shadow: 0 1px 0 rgba(0,0,0,0.03); height: var(--header-height); 
+        }
+        /* DESKTOP: Navigarea si Controalele sunt pe un singur rând (display:flex) */
+        .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+        .logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
+        .logo img{height: 64px; width:auto; border-radius:8px; display:block}
+        
+        /* Desktop Logo Text: Nume pe doua randuri */
+        .logo .subtitle{font-size:12px;color:var(--muted); display: block;} 
+
+        /* nav */
+        nav ul{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+        nav a{color:var(--text);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;transition:all .18s;display:inline-block}
+        nav a:hover, nav a.active{background:var(--accent);color:#fff}
+
+        /* controls */
+        .controls{display:flex;gap:8px;align-items:center}
+        .controls button{background:transparent;border:1px solid #ddd;padding:6px 8px;border-radius:8px;font-weight:600;cursor:pointer; transition: all .2s;}
+        .controls button:hover{background: #eee;}
+        .controls button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--accent); background: #eee;}
+        
+        /* hamburger */
+        .menu-toggle{ /* Trebuie ascuns pe desktop */
+             display: none; 
+             width: 30px; 
+             height: 30px; 
+             flex-direction: column; 
+             justify-content: space-around;
+             padding: 4px;
+             cursor: pointer;
+        }
+        .menu-toggle span{
+             display: block; width: 100%; height: 3px; background: var(--text); border-radius: 3px;
+        }
+        
+        /* Restul CSS-ului */
+        .hero{display:grid; grid-template-columns:1fr 420px; gap:36px; align-items:center; padding:64px 0;}
+        .hero-left h1{font-size:38px;margin:0 0 16px}
+        .hero-left p{color:var(--muted);margin:0 0 18px}
+        .btn{display:inline-block;padding:12px 20px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+        .btn:hover{opacity:.95;transform:translateY(-2px)}
+        .hero-right .card{border-radius:var(--radius);padding:20px;border:1px solid #eee;background:#fafafa}
+        .products{padding:48px 0}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px;text-align:center}
+        .product{border:1px solid #eee;padding:12px;border-radius:10px;background:#fff;transition:transform .22s,box-shadow .22s}
+        .product:hover{transform:translateY(-6px);box-shadow:0 10px 20px rgba(0,0,0,0.06)}
+        .product img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px}
+        .product h3{font-size:16px; margin: 4px 0}
+        .product small{display:block;color:var(--muted)}
+        .about{display:flex;gap:36px;align-items:center;padding:48px 0;flex-wrap: wrap;}
+        .about > div{flex:1; min-width:300px;}
+        .about img{width:100%; max-width:400px; height:auto; border-radius:12px;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+        .contact{padding:48px 0;background:#fafafa;border-radius:12px;margin-bottom:24px; padding-left:24px; padding-right:24px}
+        .contact .cols{display:grid;grid-template-columns:1fr 380px;gap:24px}
+        form{display:grid;gap:12px}
+        input,textarea{padding:10px;border:1px solid #ddd;border-radius:8px;font-size:1rem;width:100%}
+        input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 3px 10px rgba(47,133,90,0.06)}
+        aside .card-plain{padding:12px;border-radius:10px;border:1px solid #eee;background:#fff}
+        footer{padding:24px 0;color:var(--muted);border-top:1px solid #eee;text-align:center;font-size:14px}
+        .fade-section{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(.2,.9,.3,1)}
+        .fade-section.visible{opacity:1;transform:none}
+        a:focus, button:focus, input:focus, textarea:focus{outline: none; box-shadow: 0 0 0 var(--focus) rgba(31,111,58,0.18); border-radius:8px}
+        :focus-visible{outline: 3px solid #ffb703}
+        @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+        .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+
+        /* -------------------------------------- */
+        /* PUNCTE DE RUPERE (MEDIA QUERIES) - OPTIMIZARE MOBIL */
+        /* -------------------------------------- */
+
+        /* Tableta (max-width: 900px) */
+        @media (max-width:900px){
+            .container{padding:0 16px}
+            .logo img{height: 52px;}
+            :root{--header-height: 72px;} 
+            .nav{padding:8px 0;}
+            
+            /* LOGO OPTIMIZARE CRITICĂ: Face subtitlul (.subtitle) să apară inline, lângă textul principal. */
+            .logo .subtitle{
+                display: inline; 
+                margin-left: 5px; 
+                font-size: 14px; 
+                color: var(--text); 
+                font-weight: 600;
+            }
+            .logo > div > div:first-child{
+                /* Asigură că textul principal (SOFELA PREMIER SRL) este afișat ca un element inline */
+                display: inline; 
+            }
+            /* End LOGO OPTIMIZARE */
+            
+             nav ul{
+                 display:none;position:absolute;left:0;right:0;
+                 top:var(--header-height); 
+                 background:rgba(255,255,255,0.99);flex-direction:column;gap:8px;padding:14px 0;border-bottom:1px solid #eee
+             }
+             html[data-contrast="high"] nav ul{background:rgba(0,0,0,0.99); border-bottom: 1px solid var(--accent);}
+             nav ul.show{display:flex}
+             .menu-toggle{display:flex}
+             .controls{display:none;} 
+            
+            /* Restul optimizarilor */
+            .hero{grid-template-columns:1fr; padding:40px 0; text-align:center; gap:20px;}
+            .hero-left h1{font-size:30px;}
+            .hero-right{order:3;}
+            .about{flex-direction:column; text-align:center;}
+            .about img{max-width:100%;}
+            .contact .cols{grid-template-columns:1fr;} 
+            .contact iframe{height:300px}
+        }
+        
+        /* Telefon (max-width: 600px) - BARA FIXA STIVUITĂ */
+        @media (max-width:600px){
+            :root{--base-font: 15px;}
+            .hero-left h1{font-size:24px;}
+            .product img{height: 100px;}
+            .grid{gap:16px;}
+
+            /* Corectat inaltimea pentru a nu taia butoanele */
+            :root{--header-height: 98px;} 
+            body{padding-top: var(--header-height);}
+            header[role="banner"]{height: auto;} 
+            
+            /* LOGO: Păstrăm setările de la 900px */
+            .logo{width: 65%; order: 1;}
+
+            /* REAFIȘARE CONTROALE ȘI STIVUIRE */
+            .nav{
+                flex-wrap: wrap; 
+                align-items: flex-start;
+                padding: 8px 0;
+            }
+            .menu-toggle{order: 2;}
+            
+            .controls{
+                display: flex; 
+                width: 100%; 
+                gap: 4px;
+                margin-top: 6px; 
+                order: 3; 
+                justify-content: space-between;
+                padding-bottom: 8px; 
+            }
+            
+            nav ul{
+                top:var(--header-height); 
+            }
+
+            .controls button{
+                padding: 6px 4px; 
+                font-size: 11px; 
+                flex-grow: 1; 
+            }
+
+            /* Citire Text - Scurtat */
+            .controls #ttsToggle{
+                font-size: 0; 
+                padding: 6px 8px; 
+            }
+            .controls #ttsToggle::before{
+                 content: "🔊 Citire"; 
+                 font-size: 11px; 
+            }
+        }
+        
+        /* Telefon foarte mic (max-width: 380px) */
+        @media (max-width:380px){
+            .logo img{height: 48px;}
+            /* Ascunde tot textul din logo (div-ul părinte) */
+            .logo > div{display:none;} 
+            .controls{gap:2px;}
+            .controls #ttsToggle::before{
+                 content: "🔊"; 
+                 font-size: 14px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#maincontent">Sari la conținut</a>
+
+    <header role="banner">
+        <div class="container nav">
+            <div class="logo">
+                <img src="images/logo.png" alt="SOFELA PREMIER - logo" loading="lazy">
+                <div>
+                    <div>SOFELA PREMIER SRL</div>
+                    <div class="subtitle">DEPOZIT LEGUME-FRUCTE</div>
+                </div>
+            </div>
+            
+            <div class="controls" aria-hidden="false">
+                <button id="decreaseText" title="Micșorează textul" aria-label="Micșorează textul">A-</button>
+                <button id="resetText" title="Resetează mărimea textului" aria-label="Resetează mărimea textului">A</button>
+                <button id="increaseText" title="Mărește textul" aria-label="Mărește textul">A+</button>
+                <button id="toggleContrast" aria-pressed="false" title="Contrast înalt" aria-label="Activează contrast înalt">Contrast</button>
+                <button id="ttsToggle" aria-pressed="false" title="Pornește citirea textului" aria-label="Pornește citirea textului">🔊 Citire text</button>
+            </div>
+            
+            <div class="menu-toggle" id="menuToggle" aria-label="Deschide meniul" role="button" tabindex="0" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </div>
+            
+            <nav aria-label="Meniu principal">
+                <ul id="navMenu">
+                    <li><a href="#home" class="active">Acasă</a></li>
+                    <li><a href="#produse">Ce vă oferim</a></li>
+                    <li><a href="#despre">Despre noi</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="maincontent" class="container" role="main">
+        <section class="hero fade-section" id="home" aria-labelledby="hero-title">
+            <div class="hero-left">
+                <h1 id="hero-title">La noi găsiți legume și fructe de calitate</h1>
+                <div class="hero-text-list" style="color:var(--muted)">
+                    <p>SC SOFELA PREMIER SRL este partenerul dumneavoastră de încredere.</p>
+                    <p class="feature-item">♦ Calitate garantată</p>
+                    <p class="feature-item">♦ Prețuri competitive</p>
+                    <p class="feature-item">♦ Logistică optimizată</p>
+                </div>
+                <a class="btn" href="#contact">SOLICITĂ OFERTĂ</a>
+            </div>
+            <aside class="hero-right" aria-labelledby="contact-quick">
+                <div class="card" role="region">
+                    <strong id="contact-quick">Contact rapid</strong>
+                    <p class="contact-info-phone" style="margin:8px 0;color:var(--muted)">📞 <a href="tel:+40752779100">0752 779 100</a></p>
+                    <p class="contact-info-email" style="margin:8px 0;color:var(--muted)">✉️ <a href="mailto:sofelapremiersrl@gmail.com">sofelapremiersrl@gmail.com</a></p>
+                    <p style="margin:8px 0"><a href="#contact">Trimite-ne un mesaj</a></p>
+                </div>
+            </aside>
+        </section>
+
+        <section id="produse" class="products fade-section" aria-labelledby="produse-title">
+            <h2 id="produse-title">Ce vă oferim:</h2>
+            <div class="grid" role="list">
+                <article class="product" role="listitem"><img src="images/cartofi.png" alt="Cartofi" loading="lazy"><h3>CARTOFI</h3><small>ALB/ROȘU</small></article>
+                <article class="product" role="listitem"><img src="images/ceapa.png" alt="Ceapă" loading="lazy"><h3>CEAPĂ</h3></article>
+                <article class="product" role="listitem"><img src="images/pepeni.png" alt="Pepeni" loading="lazy"><h3>PEPENI</h3></article>
+                <article class="product" role="listitem"><img src="images/mere.png" alt="Mere" loading="lazy"><h3>MERE</h3></article>
+                <article class="product" role="listitem"><img src="images/morcov.png" alt="Morcov" loading="lazy"><h3>MORCOV</h3></article>
+                <article class="product" role="listitem"><img src="images/fasole.png" alt="Fasole" loading="lazy"><h3>FASOLE</h3></article>
+                <article class="product" role="listitem"><img src="images/portocale.png" alt="Portocale" loading="lazy"><h3>PORTOCALE</h3></article>
+                <article class="product" role="listitem"><img src="images/mandarine.png" alt="Mandarine" loading="lazy"><h3>MANDARINE</h3></article>
+                <article class="product" role="listitem"><img src="images/lamai.png" alt="Lămâi" loading="lazy"><h3>LĂMÂI</h3></article>
+                <article class="product" role="listitem"><img src="images/pere.png" alt="Pere" loading="lazy"><h3>PERE</h3></article>
+            </div>
+        </section>
+
+        <section id="despre" class="about fade-section" aria-labelledby="despre-title">
+            <div>
+                <h2 id="despre-title">Despre noi</h2>
+                <p><strong>SC SOFELA PREMIER SRL</strong> este o companie cu sediul în comuna Matca, județul Galați, specializată în comerțul cu ridicata al fructelor și legumelor.</p>
+                <p>Ne bazăm pe seriozitate, parteneriate stabile și un sistem logistic modern care garantează prospețime și livrare rapidă.</p>
+                <p>Obiectivul nostru este să fim prima alegere pentru partenerii care caută calitate și încredere în mediul B2B.</p>
+                <p style="margin-top:12px"><a class="btn" href="#contact">SOLICITĂ OFERTĂ</a></p>
+            </div>
+            <img src="images/depozit.jpg" alt="Depozit SOFELA PREMIER" loading="lazy">
+        </section>
+
+        <div style="text-align:center;margin:48px 0 16px" aria-hidden="true">
+            <img src="images/logo.png" alt="SOFELA PREMIER logo" style="width:140px;height:auto;border-radius:50%" loading="lazy">
+        </div>
+
+        <section id="contact" class="contact fade-section" aria-labelledby="contact-title">
+            <h2 id="contact-title">Contact</h2>
+            <div class="cols" aria-label="Formular și locație">
+                <div>
+                    <p style="color:var(--muted)">Completează formularul și revenim în cel mai scurt timp.</p>
+                    <form id="contactForm" action="https://formspree.io/f/xanldpbl" method="POST" aria-label="Formular contact">
+                        <label for="name">Nume / Firmă
+                            <input id="name" type="text" name="name" required placeholder="Nume complet sau firmă" />
+                        </label>
+                        <label for="phone">Telefon
+                            <input id="phone" type="tel" name="phone" required placeholder="07xx xxx xxx" inputmode="tel" />
+                        </label>
+                        <label for="email">Email
+                            <input id="email" type="email" name="_replyto" required placeholder="adresa@exemplu.ro" />
+                        </label>
+                        <label for="message">Mesaj
+                            <textarea id="message" name="message" rows="5" required placeholder="Spune-ne ce cantitate, termene, detalii..."></textarea>
+                        </label>
+                        <input type="text" name="_gotcha" style="display:none" aria-hidden="true" />
+                        <button class="btn" type="submit">Trimite mesaj</button>
+                        <p id="formResult" style="color:var(--muted);margin-top:8px" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+                <aside>
+                    <div class="card-plain" aria-label="Date contact">
+                        <strong>Date de contact</strong>
+                        <p class="contact-info-address" style="margin:8px 0">📍 Strada Ștefan cel Mare nr. 589, Comuna Matca, Galați</p>
+                        <p class="contact-info-phone-footer" style="margin:8px 0">📞 <a href="tel:+40752779100">0752 779 100</a></p>
+                        <p class="contact-info-email-footer" style="margin:8px 0">✉️ <a href="mailto:sofelapremiersrl@gmail.com">sofelapremiersrl@gmail.com</a></p>
+                    </div>
+                    <div style="margin-top:12px;border-radius:10px;overflow:hidden;border:1px solid #eee">
+                        <iframe
+                            title="Harta SOFELA PREMIER - Matca, Galați"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1202.8007902590211!2d27.486915434962746!3d45.84493106230112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b4290054e84b1d%3A0xf4323a2286b078b3!2sSOFELA%20PREMIER%20SRL!5e0!3m2!1sro!2sro!4v1760010136825!5m2!1sro!2sro"
+                            width="100%" height="320" style="border:0;min-height:240px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo" class="container">
+        <strong>SOFELA PREMIER SRL</strong><br>
+        <small>© <span id="year"></span> SOFELA PREMIER. Toate drepturile rezervate.</small>
+    </footer>
+
+    <script>
+        // year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // smooth scroll + active state (enhanced a11y)
+        document.querySelectorAll('a[href^="#"]').forEach(a=>{
+            a.addEventListener('click', e=>{
+                const href = a.getAttribute('href');
+                const target = document.querySelector(href);
+                if(!target) return;
+                e.preventDefault();
+                // close mobile menu if open
+                document.getElementById('navMenu').classList.remove('show');
+                document.getElementById('menuToggle').classList.remove('active');
+                document.getElementById('menuToggle').setAttribute('aria-expanded','false');
+                // set active link
+                document.querySelectorAll('nav a').forEach(x=>x.classList.remove('active'));
+                a.classList.add('active');
+                // focus for accessibility
+                target.setAttribute('tabindex','-1');
+                target.focus({preventScroll:true});
+                target.scrollIntoView({behavior:'smooth',block:'start'});
+            });
+        });
+
+        // fade-in on scroll
+        const faders = document.querySelectorAll('.fade-section');
+        const obs = new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){ entry.target.classList.add('visible'); }
+            });
+        },{threshold:0.18});
+        faders.forEach(el=>obs.observe(el));
+
+        // mobile menu toggle (keyboard accessible)
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', toggleMenu);
+        menuToggle.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); toggleMenu(); } });
+        function toggleMenu(){
+            const expanded = menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('show');
+            menuToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        }
+
+        // Form submit UX (Formspree will handle email sending)
+        const form = document.getElementById('contactForm');
+        const result = document.getElementById('formResult');
+        form.addEventListener('submit', (e)=>{
+            result.textContent = 'Se trimite mesajul...';
+            // allow browser to submit normally to Formspree
+        });
+
+        // Text size controls
+        const decrease = document.getElementById('decreaseText');
+        const increase = document.getElementById('increaseText');
+        const reset = document.getElementById('resetText');
+        const root = document.documentElement;
+        function getBase(){ return parseInt(getComputedStyle(root).getPropertyValue('--base-font')) || 16; }
+        decrease.addEventListener('click', ()=>{
+            let size = getBase(); if(size>12) size -= 2; root.style.setProperty('--base-font', size+'px');
+        });
+        increase.addEventListener('click', ()=>{
+            let size = getBase(); if(size<28) size += 2; root.style.setProperty('--base-font', size+'px');
+        });
+        reset.addEventListener('click', ()=>{ root.style.setProperty('--base-font','16px'); });
+
+        // Contrast toggle (applies data attribute on html element)
+        const contrastBtn = document.getElementById('toggleContrast');
+        contrastBtn.addEventListener('click', ()=>{
+            const html = document.documentElement;
+            const isHigh = html.getAttribute('data-contrast') === 'high';
+            if(isHigh){ html.removeAttribute('data-contrast'); contrastBtn.setAttribute('aria-pressed','false'); }
+            else{ html.setAttribute('data-contrast','high'); contrastBtn.setAttribute('aria-pressed','true'); }
+            // ensure focus remains visible
+            contrastBtn.focus();
+        });
+        contrastBtn.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); contrastBtn.click(); } });
+
+        // Text-to-Speech (TTS) - accessible reader using SpeechSynthesis API (COD OPTIMIZAT)
+        const ttsBtn = document.getElementById('ttsToggle');
+        let synth = window.speechSynthesis;
+        let utterance = null;
+        let paused = false;
+        
+        // Functie pentru a verifica daca un element este vizibil in viewport
+        function isElementVisible(el){
+            if(!el) return false;
+            const rect = el.getBoundingClientRect();
+            // Verifică vizibilitatea pe axa Y (înălțime/lățime > 0 și nu e în afara ecranului)
+            return (rect.width > 0 && rect.height > 0 && rect.bottom >= 0 && rect.top <= (window.innerHeight || document.documentElement.clientHeight));
+        }
+
+        // Functia PRINCIPALA de adunare a textului de citit
+        function gatherReadableNodes(){
+            // Selectori extinsi pentru a prinde TOT continutul text din sectiunile principale.
+            const selectors = 'h1, h2, h3, p, li, strong, small, a:not(.skip-link):not(.controls button), .product h3';
+            const mainContent = document.querySelector('main');
+            const footer = document.querySelector('footer');
+            
+            // Căutăm nodurile în <main> și apoi în <footer>
+            const nodes = Array.from(mainContent.querySelectorAll(selectors))
+                              .concat(Array.from(footer.querySelectorAll(selectors)));
+
+            const uniqueTexts = new Set();
+            const filtered = [];
+            
+            // Elemente al căror text nu trebuie citit de două ori (ex: date de contact care apar în cardul rapid ȘI în footer/aside)
+            const skipDuplicateSelectors = [
+                '.contact-info-phone a',
+                '.contact-info-email a',
+                '.contact-info-address'
+            ];
+            
+            const readTexts = new Set();
+
+            // 1. Găsim elementele unice și vizibile.
+            nodes.forEach(n=>{
+                let txt = (n.innerText || n.textContent || '').trim();
+                // Elimină caracterele speciale de listă
+                if(n.classList.contains('feature-item')){
+                    txt = txt.replace(/♦\s*/, '').trim();
+                }
+                
+                // Ignoră butoanele/link-urile de navigație mobile din header (dacă nu e ascuns corect)
+                if (n.closest('header') && n.tagName.toLowerCase() === 'a') {
+                    return;
+                }
+
+                // Ignoră textul gol, sau texte prea scurte care sunt probabil simboluri sau numere unice (ex. '0' sau '*')
+                if(txt.length < 2 || !isElementVisible(n)) return;
+
+                // Dacă textul e o duplicare a unei date de contact, o citim doar prima oară.
+                let isDuplicateContact = false;
+                for (let sel of skipDuplicateSelectors) {
+                    if (n.matches(sel) && readTexts.has(txt)) {
+                        isDuplicateContact = true;
+                        break;
+                    }
+                }
+                if(isDuplicateContact) return;
+                readTexts.add(txt);
+                
+                // Adaugă nodul filtrat
+                filtered.push(n);
+            });
+
+            return filtered;
+        }
+
+        // Functia care converteste lista de noduri in text unitar
+        function buildTextFromNodes(nodes){
+            const parts = nodes.map(n=>{
+                let txt = (n.innerText || n.textContent).trim();
+                
+                if(n.classList.contains('feature-item')){
+                    txt = txt.replace(/♦\s*/, '').trim();
+                }
+                
+                // Tratează link-urile: citește textul plus "link" pentru context
+                if(n.tagName.toLowerCase() === 'a' && !txt.match(/^((\d{10,})|(\S+@\S+\.\S+))$/i)) {
+                    // Dacă e link intern/buton, adaugă "link"
+                    if(n.closest('nav') || n.classList.contains('btn')) {
+                        return txt + ' link';
+                    }
+                    return txt + '.';
+                }
+                
+                // Asigură o pauză după titluri și paragrafe
+                if(n.tagName.toLowerCase().match(/h[1-6]|p|li|strong/)) {
+                    return txt + '.\n\n';
+                }
+                
+                return txt;
+            });
+            
+            // Curățăm spațiile goale multiple
+            let fullText = parts.join(' ');
+            fullText = fullText.replace(/\.\s*\.\s*/g, '. '); // Elimină punctele multiple
+            return fullText.trim();
+        }
+
+        function startReading(){
+            if(!('speechSynthesis' in window)){
+                alert('Funcția de citire nu este disponibilă în acest browser. Vă rugăm să folosiți Chrome, Edge, Safari sau Firefox moderne.');
+                return;
+            }
+            stopReading();
+
+            const nodes = gatherReadableNodes();
+            const text = buildTextFromNodes(nodes);
+
+            if(!text || text.trim().length===0){
+                alert('Nu există text vizibil de citit pe pagină.');
+                return;
+            }
+
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ro-RO';
+            utterance.rate = 1;
+            utterance.pitch = 1;
+
+            utterance.onend = ()=>{ ttsBtn.setAttribute('aria-pressed','false'); ttsBtn.textContent = '🔊 Citire text'; };
+            utterance.onerror = (e)=>{ console.error('TTS error', e); ttsBtn.setAttribute('aria-pressed','false'); ttsBtn.textContent = '🔊 Citire text'; alert('Eroare la citire. Încercați din nou.'); };
+
+            synth.speak(utterance);
+            ttsBtn.setAttribute('aria-pressed','true');
+            ttsBtn.textContent = '⏸️ Pauză citire';
+        }
+
+        function pauseReading(){
+            if(synth.speaking && !synth.paused){ synth.pause(); paused = true; ttsBtn.textContent = '▶️ Continuă citirea'; }
+        }
+        function resumeReading(){
+            if(synth.paused){ synth.resume(); paused = false; ttsBtn.textContent = '⏸️ Pauză citire'; }
+        }
+        function stopReading(){
+            if(synth.speaking || synth.paused){ synth.cancel(); paused = false; ttsBtn.setAttribute('aria-pressed','false'); ttsBtn.textContent = '🔊 Citire text'; }
+        }
+
+        ttsBtn.addEventListener('click', ()=>{
+            if(!synth.speaking && !synth.paused){ startReading(); }
+            else if(synth.speaking && !synth.paused){ pauseReading(); }
+            else if(synth.paused){ resumeReading(); }
+        });
+
+        window.addEventListener('beforeunload', ()=>{ stopReading(); });
+        form.addEventListener('submit', ()=>{ stopReading(); });
+        ttsBtn.addEventListener('keydown', (e)=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); ttsBtn.click(); } });
+        window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape'){ stopReading(); } });
+    </script>
+</body>
+</html>
